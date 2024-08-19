@@ -1,5 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from "next/image";
+
+import { db } from "~/server/db";
+
+export const dynamic = "force-dynamic";
 
 const mockUrls = [
   "https://utfs.io/f/547403b5-e1c3-48da-9d0e-9e1eea52cca6-lkxw50.jpg",
@@ -13,16 +16,23 @@ const mockImages = mockUrls.map((url, index) => ({
   url,
 }));
 
-export default function HomePage() {
+const HomePage = async () => {
+  const posts = await db.query.posts.findMany();
+
   return (
     <main>
       <div className="flex flex-wrap gap-4">
-        {[...mockImages, ...mockImages, ...mockImages].map((image) => (
-          <div key={image.id} className="w-48">
+        {posts.map((post) => (
+          <div key={post.id}>{post.name}</div>
+        ))}
+        {[...mockImages, ...mockImages, ...mockImages].map((image, index) => (
+          <div key={index} className="w-48">
             <img src={image.url} alt={image.url} />
           </div>
         ))}
       </div>
     </main>
   );
-}
+};
+
+export default HomePage;
