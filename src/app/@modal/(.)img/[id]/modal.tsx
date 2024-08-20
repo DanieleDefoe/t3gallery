@@ -22,7 +22,7 @@ export const Modal = ({ children }: Readonly<Required<PropsWithChildren>>) => {
   return createPortal(
     <dialog
       ref={dialogRef}
-      className="bg-zinc-900/50 text-white"
+      className="bg-black/90 text-white"
       onClose={onDismiss}
     >
       {children}
