@@ -5,3 +5,11 @@
 body {
   @apply bg-black text-white;
 }
+
+dialog {
+  max-width: 100dvw;
+  max-height: 100dvh;
+  width: 100dvw;
+  height: 100dvh;
+  margin: 0;
+}
