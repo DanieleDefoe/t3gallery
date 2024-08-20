@@ -15,7 +15,10 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
+const RootLayout = ({
+  children,
+  modal,
+}: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) => {
   return (
     <ClerkProvider>
       <html lang="en" className={`${GeistSans.variable}`}>
@@ -23,6 +26,8 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
         <body className="flex flex-col gap-4">
           <TopNav />
           {children}
+          {modal}
+          <div id="modal-root" />
         </body>
       </html>
     </ClerkProvider>
