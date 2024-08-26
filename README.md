@@ -17,4 +17,4 @@
 - [x] add ShadUI (toast)
 - [x] Analytics (PostHog)
 - [x] Delete button (w/ Server Actions)
-- [ ] RateLimiting (UpStash)
+- [x] RateLimiting (UpStash)
