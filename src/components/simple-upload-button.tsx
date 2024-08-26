@@ -84,6 +84,11 @@ export const SimpleUploadButton = () => {
         icon: <LoadingSpinnerSVG />,
       });
     },
+    onUploadError: (error) => {
+      posthog.capture("upload-error", { error });
+      toast.dismiss("upload-begin");
+      toast.error("Upload error");
+    },
     onClientUploadComplete: () => {
       toast.dismiss("upload-begin");
       toast("Upload complete!");
