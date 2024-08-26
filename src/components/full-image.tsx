@@ -8,15 +8,15 @@ const FullImageView = async (props: { photoId: number }) => {
 
   return (
     <div className="flex h-full w-full min-w-0">
-      <div className="flex flex-shrink items-center">
+      <div className="flex w-full flex-shrink items-center">
         <img
           src={image.url}
-          className="flex-shrink object-contain"
+          className="w-full flex-shrink object-contain"
           alt={image.name}
         />
       </div>
 
-      <div className="flex w-48 flex-shrink-0 flex-col border-l">
+      <div className="flex w-44 flex-shrink-0 flex-col border-l">
         <p className="border-b p-2 text-center text-xl">{image.name}</p>
         <p className="flex flex-col p-2">
           <span>Uploaded By:</span>
