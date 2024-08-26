@@ -1,9 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import { clerkClient } from "@clerk/nextjs/server";
-import { getImage } from "~/server/queries";
+import { deleteImage, getImage } from "~/server/queries";
+import { Button } from "./ui/button";
+import { redirect } from "next/navigation";
 
 const FullImageView = async (props: { photoId: number }) => {
   const image = await getImage(props.photoId);
+
+  if (!image) {
+    return redirect("/");
+  }
+
   const uploaderInfo = await clerkClient.users.getUser(image.userId);
 
   return (
@@ -26,6 +33,20 @@ const FullImageView = async (props: { photoId: number }) => {
           <span>Created On:</span>
           <span>{new Date(image.createdAt).toLocaleDateString()}</span>
         </p>
+
+        <div className="p-2">
+          <form
+            action={async () => {
+              "use server";
+              await deleteImage(props.photoId);
+              redirect("/");
+            }}
+          >
+            <Button variant="destructive" type="submit">
+              Delete
+            </Button>
+          </form>
+        </div>
       </div>
     </div>
   );

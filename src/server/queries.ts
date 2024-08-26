@@ -1,6 +1,8 @@
 import "server-only";
 import { db } from "./db";
 import { auth } from "@clerk/nextjs/server";
+import { images } from "./db/schema";
+import { and, eq } from "drizzle-orm";
 
 export const getMyImages = async () => {
   const user = auth();
@@ -23,9 +25,15 @@ export const getImage = async (id: number) => {
     where: (model, { eq }) => eq(model.id, id),
   });
 
-  if (!image) throw new Error("Not found");
-
-  if (image.userId !== user.userId) throw new Error("Unauthorized");
-
   return image;
+};
+
+export const deleteImage = async (id: number) => {
+  const user = auth();
+
+  if (!user?.userId) throw new Error("Unauthorized");
+
+  await db
+    .delete(images)
+    .where(and(eq(images.id, id), eq(images.userId, user.userId)));
 };
