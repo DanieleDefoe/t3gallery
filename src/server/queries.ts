@@ -3,6 +3,7 @@ import { db } from "./db";
 import { auth } from "@clerk/nextjs/server";
 import { images } from "./db/schema";
 import { and, eq } from "drizzle-orm";
+import analyticsServerClient from "./analytics";
 
 export const getMyImages = async () => {
   const user = auth();
@@ -32,6 +33,14 @@ export const deleteImage = async (id: number) => {
   const user = auth();
 
   if (!user?.userId) throw new Error("Unauthorized");
+
+  analyticsServerClient.capture({
+    distinctId: user.userId,
+    event: "delete image",
+    properties: {
+      imageId: id,
+    },
+  });
 
   await db
     .delete(images)
